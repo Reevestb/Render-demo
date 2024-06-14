@@ -32,6 +32,21 @@ app.get("/favcars", async (request, response) => {
   response.json(result.rows);
 });
 
+app.post("/favcars", async (request, response) => {
+  const { Brand, Model, Year, Rating } = request.body;
+  try {
+    await db.query(
+      `INSERT into Favourite_Cars (Brand, Model, Year, Rating) VALUES ($1, $2, $3, $4)`,
+      [Brand, Model, Year, Rating]
+    );
+    response.status(200).json({ success: true });
+  } catch (error) {
+    console.error("No data is getting inserted");
+    response.status(500).json({ success: false });
+  }
+  response.json(result.rows);
+});
+
 app.get("/favouritecars", async (request, response) => {
   const result = await db.query(
     `

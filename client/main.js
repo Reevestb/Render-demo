@@ -1,7 +1,7 @@
 const form = document.getElementById("carForm");
 
 async function fetchAndRenderFCars() {
-  const response = await fetch("http://locahost:7430/favcars");
+  const response = await fetch("http://locahost:7430/favouritecars");
   const carList = await response.json();
   const carListDiv = document.getElementById("carList");
   carListDiv.innerHTML = "";
@@ -15,15 +15,28 @@ async function fetchAndRenderFCars() {
 fetchAndRenderFCars();
 
 form.addEventListener("submit", submitButton);
-function submitButton(event) {
+async function submitButton(event) {
   event.preventDefault();
   const formData = new FormData(form);
-  const formValues = Object.fromEntries(formData);
-  fetch("http://locahost:7430/favcars", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(formValues),
-  });
+  try {
+    const formValues = Object.fromEntries(formData);
+    const response = await fetch("http://locahost:7430/favouritecars", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log("DATA IS SAVED - ALL IS WELL");
+      fetchAndRenderFCars();
+    } else {
+      console.log("NOOO IT DIDN'T WORK!!!!!");
+    }
+  } catch (error) {
+    console.error("error", error);
+  }
 }
