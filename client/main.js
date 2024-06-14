@@ -1,10 +1,10 @@
 const form = document.getElementById("carForm");
 
 async function fetchAndRenderFCars() {
-  const response = await fetch("http://locahost:7430/favouritecars");
+  const response = await fetch("http://localhost:7430/favcars");
   const carList = await response.json();
   const carListDiv = document.getElementById("carList");
-  carListDiv.innerHTML = "";
+  carListDiv.innerHTML = " ";
 
   carList.forEach((Favourite_Cars) => {
     const carDiv = document.createElement("div");
@@ -20,7 +20,7 @@ async function submitButton(event) {
   const formData = new FormData(form);
   try {
     const formValues = Object.fromEntries(formData);
-    const response = await fetch("http://locahost:7430/favouritecars", {
+    const response = await fetch("http://localhost:7430/favcars", {
       method: "POST",
       headers: {
         "content-type": "application/json",
