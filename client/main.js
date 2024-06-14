@@ -19,7 +19,7 @@ function submitButton(event) {
   event.preventDefault();
   const formData = new FormData(form);
   const formValues = Object.fromEntries(formData);
-  fetch("http://locahost:7430/Favourite_Cars", {
+  fetch("http://locahost:7430/favcars", {
     method: "POST",
     headers: {
       "content-type": "application/json",
